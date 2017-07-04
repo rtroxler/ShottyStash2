@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 textViewItem.setPadding(0,10,0,10);
                 textViewItem.setText(textViewContents);
                 textViewItem.setTag(Integer.toString(id));
+                textViewItem.setOnLongClickListener(new OnLongClickListenerShotgunRecord());
 
                 linearLayoutRecords.addView(textViewItem);
             }

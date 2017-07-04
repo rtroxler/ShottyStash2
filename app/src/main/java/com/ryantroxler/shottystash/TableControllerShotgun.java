@@ -60,5 +60,47 @@ public class TableControllerShotgun extends DatabaseHandler {
 
         return recordsList;
     }
+
+    public ObjectShotgun readSingleRecord(int shotgunId) {
+        ObjectShotgun shotgun = null;
+
+        String sql = "SELECT * FROM shotguns WHERE id = " + shotgunId;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            shotgun = getShotgunFromCursor(cursor);
+        }
+
+        cursor.close();
+        db.close();
+
+        return shotgun;
+    }
+
+    public boolean update(ObjectShotgun shotgun) {
+        ContentValues values = new ContentValues();
+        values.put("name", shotgun.name);
+        values.put("image_url", shotgun.image_url);
+        values.put("price", shotgun.price);
+
+        String where = "id = ?";
+        String[] whereArgs = { Integer.toString(shotgun.id) };
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        boolean success = db.update("shotguns", values, where, whereArgs) > 0;
+        db.close();
+
+        return success;
+    }
+
+    public boolean delete(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        boolean success = db.delete("shotguns", "id = '" + id + "'", null) > 0;
+        db.close();
+
+        return success;
+    }
 }
 
