@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,9 +52,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
     public void onBindViewHolder(ShotgunViewHolder viewHolder, int i) {
         viewHolder.shotgunName.setText(shotguns.get(i).name);
         viewHolder.shotgunPrice.setText("$" + Double.toString(shotguns.get(i).price));
+
         if (!shotguns.get(i).image_url.isEmpty()) {
             Context context = viewHolder.shotgunImage.getContext();
-            Picasso.with(context).load(shotguns.get(i).image_url).into(viewHolder.shotgunImage);
+            Picasso picasso = Picasso.with(context);
+            picasso.load(shotguns.get(i).image_url)
+                    .into(viewHolder.shotgunImage);
         }
         viewHolder.cv.setTag(Integer.toString(shotguns.get(i).id));
         viewHolder.cv.setOnLongClickListener(new OnLongClickListenerShotgunRecord());
