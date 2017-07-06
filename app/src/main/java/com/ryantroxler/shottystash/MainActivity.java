@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
@@ -25,39 +28,35 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new OnClickListenerCreateShotgun());
 
-        readRecords();
+//        readRecords();
+        readRecycledRecords();
     }
 
-    public void readRecords() {
-        LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutRecords);
-        linearLayoutRecords.removeAllViews();
+    public void readRecycledRecords() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         List<ObjectShotgun> shotguns = new TableControllerShotgun(this).read();
+        RVAdapter adapter = new RVAdapter(shotguns);
 
-        if (shotguns.size() > 0) {
-            for (ObjectShotgun obj : shotguns) {
-                int id = obj.id;
-                String name = obj.name;
-                Double price = obj.price;
+        recyclerView.setAdapter(adapter);
+    }
 
-                String textViewContents = name + " - $" + price.toString();
+    public void updateRecyclerView(ObjectShotgun shotgun) {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
+        RVAdapter adapter = (RVAdapter) recyclerView.getAdapter();
 
-                TextView textViewItem = new TextView(this);
-                textViewItem.setPadding(0,10,0,10);
-                textViewItem.setText(textViewContents);
-                textViewItem.setTag(Integer.toString(id));
-                textViewItem.setOnLongClickListener(new OnLongClickListenerShotgunRecord());
+        adapter.addItem(shotgun);
+    }
+    public void updateRecyclerView() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
+        RVAdapter adapter = (RVAdapter) recyclerView.getAdapter();
 
-                linearLayoutRecords.addView(textViewItem);
-            }
-        }
-        else {
-            TextView locationItem = new TextView(this);
-            locationItem.setPadding(8, 8, 8, 8);
-            locationItem.setText("No records yet.");
-
-            linearLayoutRecords.addView(locationItem);
-        }
+        List<ObjectShotgun> shotguns = new TableControllerShotgun(this).read();
+        adapter.update(shotguns);
     }
 
     @Override

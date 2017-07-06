@@ -19,7 +19,6 @@ public class OnClickListenerCreateShotgun implements View.OnClickListener {
     public void onClick(View view) {
         context = view.getContext();
 
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.shotgun_input_form, null, false);
 
@@ -47,7 +46,7 @@ public class OnClickListenerCreateShotgun implements View.OnClickListener {
                                     Toast.makeText(context, "Save failed. :(", Toast.LENGTH_SHORT).show();
                                 }
 
-                                ((MainActivity) context).readRecords();
+                                ((MainActivity) context).updateRecyclerView(shotgun);
                             }
                         }).show();
     }

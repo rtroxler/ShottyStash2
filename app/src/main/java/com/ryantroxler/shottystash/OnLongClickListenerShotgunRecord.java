@@ -38,7 +38,7 @@ public class OnLongClickListenerShotgunRecord implements View.OnLongClickListene
                                 Toast.makeText(context, "Unable to delete record", Toast.LENGTH_SHORT).show();
                             }
 
-                            ((MainActivity) context).readRecords();
+                            ((MainActivity) context).updateRecyclerView();
                         }
                         dialog.dismiss();
                     }
@@ -79,8 +79,8 @@ public class OnLongClickListenerShotgunRecord implements View.OnLongClickListene
                                 } else {
                                     Toast.makeText(context, "Update failed.", Toast.LENGTH_SHORT).show();
                                 }
-                                ((MainActivity) context).readRecords();
 
+                                ((MainActivity) context).updateRecyclerView();
                                 dialog.cancel();
                             }
                         }).show();
