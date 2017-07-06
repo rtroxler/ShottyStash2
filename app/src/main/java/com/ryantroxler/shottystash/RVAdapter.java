@@ -21,7 +21,7 @@ import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder> {
 
-    List<ObjectShotgun> shotguns;
+    private List<ObjectShotgun> shotguns;
 
     RVAdapter(List<ObjectShotgun> shotguns) {
         this.shotguns = shotguns;
@@ -76,10 +76,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
 
         ShotgunViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.cv);
-            shotgunName = (TextView) itemView.findViewById(R.id.shotgun_name);
-            shotgunPrice = (TextView) itemView.findViewById(R.id.shotgun_price);
-            shotgunImage = (ImageView) itemView.findViewById(R.id.shotgun_image);
+            cv = itemView.findViewById(R.id.cv);
+            shotgunName = itemView.findViewById(R.id.shotgun_name);
+            shotgunPrice = itemView.findViewById(R.id.shotgun_price);
+            shotgunImage = itemView.findViewById(R.id.shotgun_image);
         }
     }
 }
