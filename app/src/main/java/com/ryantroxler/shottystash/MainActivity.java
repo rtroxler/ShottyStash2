@@ -1,7 +1,7 @@
 package com.ryantroxler.shottystash;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,20 +14,36 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionMenu;
+import com.github.clans.fab.FloatingActionButton;
+
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    FloatingActionMenu materialDesignFAM;
+    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        updateDatabase();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new OnClickListenerCreateShotgun());
+        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.fam);
+        floatingActionButton1 = (FloatingActionButton) findViewById(R.id.fam_item_1);
+        floatingActionButton1.setOnClickListener(new OnClickListenerCreateShotgun());
 
+        floatingActionButton2 = (FloatingActionButton) findViewById(R.id.fam_item_2);
+        floatingActionButton2.setOnClickListener(new OnClickListenerDeposit());
+        floatingActionButton3 = (FloatingActionButton) findViewById(R.id.fam_item_3);
+        floatingActionButton3.setOnClickListener(new OnClickListenerDeposit()); //validations on withdraw amount, gross
+
+        updateBalance();
         readRecycledRecords();
     }
 
@@ -56,6 +72,20 @@ public class MainActivity extends AppCompatActivity {
 
         List<ObjectShotgun> shotguns = new TableControllerShotgun(this).read();
         adapter.update(shotguns);
+    }
+
+    public void updateBalance() {
+        TextView balanceView = (TextView) findViewById(R.id.currentBalance);
+        Double balance = new TableControllerTransaction(this).currentBalance();
+        balanceView.setText("Current Stash: $" + balance.toString());
+    }
+
+    public void updateDatabase() {
+//        DatabaseHandler dbh = new DatabaseHandler(this);
+//        SQLiteDatabase db = dbh.getWritableDatabase();
+//        dbh.onUpgrade(db, 0,1); NOPE
+//        dbh.createTransactions(db); // Whatevs
+//        db.close();
     }
 
     @Override

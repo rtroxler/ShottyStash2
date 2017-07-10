@@ -17,18 +17,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE shotguns " +
+        createShotguns(db);
+        createTransactions(db);
+    }
+
+    private void createShotguns(SQLiteDatabase db) {
+        String shotgunSql = "CREATE TABLE shotguns " +
                 "( id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT, " +
                 "image_url TEXT, " +
                 "price DOUBLE ) ";
-        db.execSQL(sql);
+        db.execSQL(shotgunSql);
+    }
+
+    private void createTransactions(SQLiteDatabase db) {
+        String txnsSql = "CREATE TABLE transactions " +
+                "( id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "amount DOUBLE, " +
+                "date DATE ) ";
+        db.execSQL(txnsSql);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String sql = "DROP TABLE IF EXISTS shotguns";
         db.execSQL(sql);
+        String sql2 = "DROP TABLE IF EXISTS transactions";
+        db.execSQL(sql2);
 
         onCreate(db);
     }

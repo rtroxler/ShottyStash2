@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionMenu;
+
 /**
  * Created by ryantroxler on 7/3/17.
  */
@@ -19,6 +21,7 @@ public class OnClickListenerCreateShotgun implements View.OnClickListener {
     public void onClick(View view) {
         context = view.getContext();
 
+        FloatingActionMenu fam = (FloatingActionMenu) ((MainActivity) context).findViewById(R.id.fam);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.shotgun_input_form, null, false);
 
@@ -26,6 +29,7 @@ public class OnClickListenerCreateShotgun implements View.OnClickListener {
         final EditText editTextShotgunPrice = formElementsView.findViewById(R.id.editTextShotgunPrice);
         final EditText editTextShotgunImageUrl = formElementsView.findViewById(R.id.editTextShotgunImageUrl);
 
+        fam.close(false);
         new AlertDialog.Builder(context)
                 .setView(formElementsView)
                 .setTitle("Create New Shotgun")
