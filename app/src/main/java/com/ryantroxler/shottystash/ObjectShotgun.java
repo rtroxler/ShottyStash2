@@ -22,5 +22,21 @@ public class ObjectShotgun {
         image_url = url;
         price = p;
     }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getImageURL() {
+        return this.image_url;
+    }
+
+    public Double getPrice() {
+        return this.price;
+    }
 }
 

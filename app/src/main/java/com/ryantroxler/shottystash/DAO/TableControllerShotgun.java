@@ -1,9 +1,12 @@
-package com.ryantroxler.shottystash;
+package com.ryantroxler.shottystash.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.ryantroxler.shottystash.DAO.DatabaseHandler;
+import com.ryantroxler.shottystash.ObjectShotgun;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +24,14 @@ public class TableControllerShotgun extends DatabaseHandler {
         String url = cursor.getString(cursor.getColumnIndex("image_url"));
         Double price = Double.parseDouble(cursor.getString(cursor.getColumnIndex("price")));
 
-        ObjectShotgun shotgun = new ObjectShotgun(id, name, url, price);
-
-        return shotgun;
+        return new ObjectShotgun(id, name, url, price);
     }
 
     public boolean create(ObjectShotgun shotgun) {
         ContentValues values = new ContentValues();
-        values.put("name", shotgun.name);
-        values.put("image_url", shotgun.image_url);
-        values.put("price", shotgun.price);
+        values.put("name", shotgun.getName());
+        values.put("image_url", shotgun.getImageURL());
+        values.put("price", shotgun.getPrice());
 
         SQLiteDatabase db = this.getWritableDatabase();
         boolean success = db.insert("shotguns", null, values) > 0;
@@ -81,12 +82,12 @@ public class TableControllerShotgun extends DatabaseHandler {
 
     public boolean update(ObjectShotgun shotgun) {
         ContentValues values = new ContentValues();
-        values.put("name", shotgun.name);
-        values.put("image_url", shotgun.image_url);
-        values.put("price", shotgun.price);
+        values.put("name", shotgun.getName());
+        values.put("image_url", shotgun.getImageURL());
+        values.put("price", shotgun.getPrice());
 
         String where = "id = ?";
-        String[] whereArgs = { Integer.toString(shotgun.id) };
+        String[] whereArgs = { Integer.toString(shotgun.getId()) };
 
         SQLiteDatabase db = this.getWritableDatabase();
         boolean success = db.update("shotguns", values, where, whereArgs) > 0;

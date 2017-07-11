@@ -1,23 +1,19 @@
 package com.ryantroxler.shottystash;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
-
-import org.w3c.dom.Text;
+import com.ryantroxler.shottystash.DAO.TableControllerShotgun;
+import com.ryantroxler.shottystash.DAO.TableControllerTransaction;
 
 import java.util.List;
 

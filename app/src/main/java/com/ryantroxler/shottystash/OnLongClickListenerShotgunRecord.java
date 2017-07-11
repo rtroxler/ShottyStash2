@@ -3,11 +3,12 @@ package com.ryantroxler.shottystash;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.ryantroxler.shottystash.DAO.TableControllerShotgun;
 
 /**
  * Created by ryantroxler on 7/3/17.

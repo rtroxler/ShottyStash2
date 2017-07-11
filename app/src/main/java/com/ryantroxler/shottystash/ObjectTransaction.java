@@ -16,4 +16,12 @@ public class ObjectTransaction {
         this.amount = amount;
         this.date = new Date();
     }
+
+    public Double getAmount() {
+        return this.amount;
+    }
+
+    public Date getDate() {
+        return this.date;
+    }
 }

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionMenu;
+import com.ryantroxler.shottystash.DAO.TableControllerTransaction;
 
 /**
  * Created by ryantroxler on 7/9/17.
