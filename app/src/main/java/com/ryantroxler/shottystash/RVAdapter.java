@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ryantroxler.shottystash.listeners.OnLongClickListenerShotgunRecord;
@@ -22,9 +23,11 @@ import java.util.List;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder> {
 
     private List<Shotgun> shotguns;
+    private Double currentBalance;
 
-    RVAdapter(List<Shotgun> shotguns) {
+    RVAdapter(List<Shotgun> shotguns, Double balance) {
         this.shotguns = shotguns;
+        this.currentBalance = balance;
     }
 
     @Override
@@ -50,8 +53,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
 
     @Override
     public void onBindViewHolder(ShotgunViewHolder viewHolder, int i) {
+        Double price = shotguns.get(i).getPrice();
+        viewHolder.shotgunPrice.setText("$" + Double.toString(price));
         viewHolder.shotgunName.setText(shotguns.get(i).getName());
-        viewHolder.shotgunPrice.setText("$" + Double.toString(shotguns.get(i).getPrice()));
+        Double progress = (currentBalance / price) * 100;
+        viewHolder.shotgunProgress.setProgress(progress.intValue());
 
         if (!shotguns.get(i).getImageURL().isEmpty()) {
             Context context = viewHolder.shotgunImage.getContext();
@@ -73,6 +79,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
         TextView shotgunName;
         TextView shotgunPrice;
         ImageView shotgunImage;
+        ProgressBar shotgunProgress;
 
         ShotgunViewHolder(View itemView) {
             super(itemView);
@@ -80,6 +87,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
             shotgunName = itemView.findViewById(R.id.shotgun_name);
             shotgunPrice = itemView.findViewById(R.id.shotgun_price);
             shotgunImage = itemView.findViewById(R.id.shotgun_image);
+            shotgunProgress = itemView.findViewById(R.id.shotgun_progress);
         }
     }
 }

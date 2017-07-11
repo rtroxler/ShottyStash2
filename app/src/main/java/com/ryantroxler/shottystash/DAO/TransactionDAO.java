@@ -38,6 +38,7 @@ public class TransactionDAO extends DatabaseHandler {
         } else
             amount = -1.0;
         c.close();
+        db.close();
         return amount;
     }
 }

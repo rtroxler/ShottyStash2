@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         List<Shotgun> shotguns = new ShotgunDAO(this).read();
-        RVAdapter adapter = new RVAdapter(shotguns);
+        Double balance = new TransactionDAO(this).currentBalance();
+        RVAdapter adapter = new RVAdapter(shotguns, balance);
 
         recyclerView.setAdapter(adapter);
     }
