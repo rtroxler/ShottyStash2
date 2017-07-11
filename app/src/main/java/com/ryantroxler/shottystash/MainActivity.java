@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
-import com.ryantroxler.shottystash.DAO.TableControllerShotgun;
-import com.ryantroxler.shottystash.DAO.TableControllerTransaction;
+import com.ryantroxler.shottystash.DAO.ShotgunDAO;
+import com.ryantroxler.shottystash.DAO.TransactionDAO;
+import com.ryantroxler.shottystash.listeners.OnClickListenerCreateShotgun;
+import com.ryantroxler.shottystash.listeners.OnClickListenerDeposit;
+import com.ryantroxler.shottystash.models.Shotgun;
 
 import java.util.List;
 
@@ -50,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        List<ObjectShotgun> shotguns = new TableControllerShotgun(this).read();
+        List<Shotgun> shotguns = new ShotgunDAO(this).read();
         RVAdapter adapter = new RVAdapter(shotguns);
 
         recyclerView.setAdapter(adapter);
     }
 
-    public void updateRecyclerView(ObjectShotgun shotgun) {
+    public void updateRecyclerView(Shotgun shotgun) {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
         RVAdapter adapter = (RVAdapter) recyclerView.getAdapter();
 
@@ -66,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
         RVAdapter adapter = (RVAdapter) recyclerView.getAdapter();
 
-        List<ObjectShotgun> shotguns = new TableControllerShotgun(this).read();
+        List<Shotgun> shotguns = new ShotgunDAO(this).read();
         adapter.update(shotguns);
     }
 
     public void updateBalance() {
         TextView balanceView = (TextView) findViewById(R.id.currentBalance);
-        Double balance = new TableControllerTransaction(this).currentBalance();
+        Double balance = new TransactionDAO(this).currentBalance();
         balanceView.setText("Current Stash: $" + balance.toString());
     }
 

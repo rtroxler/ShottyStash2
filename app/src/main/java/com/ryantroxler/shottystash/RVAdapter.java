@@ -1,16 +1,16 @@
 package com.ryantroxler.shottystash;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ryantroxler.shottystash.listeners.OnLongClickListenerShotgunRecord;
+import com.ryantroxler.shottystash.models.Shotgun;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,9 +21,9 @@ import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder> {
 
-    private List<ObjectShotgun> shotguns;
+    private List<Shotgun> shotguns;
 
-    RVAdapter(List<ObjectShotgun> shotguns) {
+    RVAdapter(List<Shotgun> shotguns) {
         this.shotguns = shotguns;
     }
 
@@ -32,12 +32,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
         return shotguns.size();
     }
 
-    public void addItem(ObjectShotgun shotgun) {
+    public void addItem(Shotgun shotgun) {
         shotguns.add(shotgun);
         notifyItemInserted(shotguns.size() - 1);
     }
 
-    public void update(List<ObjectShotgun> shotguns) {
+    public void update(List<Shotgun> shotguns) {
         this.shotguns = shotguns;
         notifyDataSetChanged();
     }
@@ -50,16 +50,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
 
     @Override
     public void onBindViewHolder(ShotgunViewHolder viewHolder, int i) {
-        viewHolder.shotgunName.setText(shotguns.get(i).name);
-        viewHolder.shotgunPrice.setText("$" + Double.toString(shotguns.get(i).price));
+        viewHolder.shotgunName.setText(shotguns.get(i).getName());
+        viewHolder.shotgunPrice.setText("$" + Double.toString(shotguns.get(i).getPrice()));
 
-        if (!shotguns.get(i).image_url.isEmpty()) {
+        if (!shotguns.get(i).getImageURL().isEmpty()) {
             Context context = viewHolder.shotgunImage.getContext();
             Picasso picasso = Picasso.with(context);
-            picasso.load(shotguns.get(i).image_url)
+            picasso.load(shotguns.get(i).getImageURL())
                     .into(viewHolder.shotgunImage);
         }
-        viewHolder.cv.setTag(Integer.toString(shotguns.get(i).id));
+        viewHolder.cv.setTag(Integer.toString(shotguns.get(i).getId()));
         viewHolder.cv.setOnLongClickListener(new OnLongClickListenerShotgunRecord());
     }
 

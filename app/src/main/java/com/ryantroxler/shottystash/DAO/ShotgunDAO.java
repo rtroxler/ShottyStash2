@@ -5,8 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.ryantroxler.shottystash.DAO.DatabaseHandler;
-import com.ryantroxler.shottystash.ObjectShotgun;
+import com.ryantroxler.shottystash.models.Shotgun;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +14,19 @@ import java.util.List;
  * Created by ryantroxler on 7/3/17.
  */
 
-public class TableControllerShotgun extends DatabaseHandler {
-    public TableControllerShotgun(Context context) { super(context); }
+public class ShotgunDAO extends DatabaseHandler {
+    public ShotgunDAO(Context context) { super(context); }
 
-    public ObjectShotgun getShotgunFromCursor(Cursor cursor) {
+    public Shotgun getShotgunFromCursor(Cursor cursor) {
         int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("id")));
         String name = cursor.getString(cursor.getColumnIndex("name"));
         String url = cursor.getString(cursor.getColumnIndex("image_url"));
         Double price = Double.parseDouble(cursor.getString(cursor.getColumnIndex("price")));
 
-        return new ObjectShotgun(id, name, url, price);
+        return new Shotgun(id, name, url, price);
     }
 
-    public boolean create(ObjectShotgun shotgun) {
+    public boolean create(Shotgun shotgun) {
         ContentValues values = new ContentValues();
         values.put("name", shotgun.getName());
         values.put("image_url", shotgun.getImageURL());
@@ -40,8 +39,8 @@ public class TableControllerShotgun extends DatabaseHandler {
         return success;
     }
 
-    public List<ObjectShotgun> read() {
-        List<ObjectShotgun> recordsList = new ArrayList<ObjectShotgun>();
+    public List<Shotgun> read() {
+        List<Shotgun> recordsList = new ArrayList<Shotgun>();
 
         String sql = "SELECT * FROM shotguns ORDER BY id DESC";
 
@@ -51,7 +50,7 @@ public class TableControllerShotgun extends DatabaseHandler {
 
         if (cursor.moveToFirst()) {
             do {
-                ObjectShotgun student = getShotgunFromCursor(cursor);
+                Shotgun student = getShotgunFromCursor(cursor);
 
                 recordsList.add(student);
             } while (cursor.moveToNext());
@@ -62,8 +61,8 @@ public class TableControllerShotgun extends DatabaseHandler {
         return recordsList;
     }
 
-    public ObjectShotgun readSingleRecord(int shotgunId) {
-        ObjectShotgun shotgun = null;
+    public Shotgun readSingleRecord(int shotgunId) {
+        Shotgun shotgun = null;
 
         String sql = "SELECT * FROM shotguns WHERE id = " + shotgunId;
 
@@ -80,7 +79,7 @@ public class TableControllerShotgun extends DatabaseHandler {
         return shotgun;
     }
 
-    public boolean update(ObjectShotgun shotgun) {
+    public boolean update(Shotgun shotgun) {
         ContentValues values = new ContentValues();
         values.put("name", shotgun.getName());
         values.put("image_url", shotgun.getImageURL());

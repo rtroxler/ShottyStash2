@@ -1,4 +1,4 @@
-package com.ryantroxler.shottystash;
+package com.ryantroxler.shottystash.listeners;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,7 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionMenu;
-import com.ryantroxler.shottystash.DAO.TableControllerShotgun;
+import com.ryantroxler.shottystash.DAO.ShotgunDAO;
+import com.ryantroxler.shottystash.MainActivity;
+import com.ryantroxler.shottystash.R;
+import com.ryantroxler.shottystash.models.Shotgun;
 
 /**
  * Created by ryantroxler on 7/3/17.
@@ -41,9 +44,9 @@ public class OnClickListenerCreateShotgun implements View.OnClickListener {
                                 Double price = Double.parseDouble(editTextShotgunPrice.getText().toString());
                                 String image_url = editTextShotgunImageUrl.getText().toString();
 
-                                ObjectShotgun shotgun = new ObjectShotgun(name, image_url, price);
+                                Shotgun shotgun = new Shotgun(name, image_url, price);
 
-                                boolean createSuccessful = new TableControllerShotgun(context).create(shotgun);
+                                boolean createSuccessful = new ShotgunDAO(context).create(shotgun);
 
                                 if (createSuccessful) {
                                     Toast.makeText(context, "Information was saved!", Toast.LENGTH_SHORT).show();

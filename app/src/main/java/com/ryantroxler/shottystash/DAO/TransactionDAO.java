@@ -5,19 +5,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.ryantroxler.shottystash.DAO.DatabaseHandler;
-import com.ryantroxler.shottystash.ObjectTransaction;
+import com.ryantroxler.shottystash.models.Transaction;
 
 /**
  * Created by ryantroxler on 7/9/17.
  */
 
-public class TableControllerTransaction extends DatabaseHandler {
+public class TransactionDAO extends DatabaseHandler {
     private static final String TABLE_NAME = "transactions";
 
-    public TableControllerTransaction(Context context) { super(context); }
+    public TransactionDAO(Context context) { super(context); }
 
-    public boolean create(ObjectTransaction transaction) {
+    public boolean create(Transaction transaction) {
         ContentValues values = new ContentValues();
         values.put("amount", transaction.getAmount());
         values.put("date", transaction.getDate().toString());

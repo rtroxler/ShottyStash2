@@ -1,4 +1,4 @@
-package com.ryantroxler.shottystash;
+package com.ryantroxler.shottystash.models;
 
 import java.util.Date;
 
@@ -6,13 +6,13 @@ import java.util.Date;
  * Created by ryantroxler on 7/9/17.
  */
 
-public class ObjectTransaction {
+public class Transaction {
     int id;
     Double amount;
     Date date;
 
-    public ObjectTransaction() {}
-    public ObjectTransaction(Double amount) {
+    public Transaction() {}
+    public Transaction(Double amount) {
         this.amount = amount;
         this.date = new Date();
     }

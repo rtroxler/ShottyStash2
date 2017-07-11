@@ -1,4 +1,4 @@
-package com.ryantroxler.shottystash;
+package com.ryantroxler.shottystash.listeners;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -9,7 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionMenu;
-import com.ryantroxler.shottystash.DAO.TableControllerTransaction;
+import com.ryantroxler.shottystash.DAO.TransactionDAO;
+import com.ryantroxler.shottystash.MainActivity;
+import com.ryantroxler.shottystash.R;
+import com.ryantroxler.shottystash.models.Transaction;
 
 /**
  * Created by ryantroxler on 7/9/17.
@@ -37,9 +40,9 @@ public class OnClickListenerDeposit implements View.OnClickListener {
                             public void onClick(DialogInterface dialog, int id) {
                                 Double price = Double.parseDouble(editTransactionAmount.getText().toString());
 
-                                ObjectTransaction transaction = new ObjectTransaction(price);
+                                Transaction transaction = new Transaction(price);
 
-                                boolean createSuccessful = new TableControllerTransaction(context).create(transaction);
+                                boolean createSuccessful = new TransactionDAO(context).create(transaction);
 
                                 if (createSuccessful) {
                                     Toast.makeText(context, "Information was saved!", Toast.LENGTH_SHORT).show();

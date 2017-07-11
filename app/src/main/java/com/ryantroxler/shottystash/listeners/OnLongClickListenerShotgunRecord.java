@@ -1,4 +1,4 @@
-package com.ryantroxler.shottystash;
+package com.ryantroxler.shottystash.listeners;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.ryantroxler.shottystash.DAO.TableControllerShotgun;
+import com.ryantroxler.shottystash.DAO.ShotgunDAO;
+import com.ryantroxler.shottystash.MainActivity;
+import com.ryantroxler.shottystash.R;
+import com.ryantroxler.shottystash.models.Shotgun;
 
 /**
  * Created by ryantroxler on 7/3/17.
@@ -31,7 +34,7 @@ public class OnLongClickListenerShotgunRecord implements View.OnLongClickListene
                         if (item == 0) {
                             editRecord(Integer.parseInt(id));
                         } else if (item == 1) {
-                            boolean deleteSuccessful = new TableControllerShotgun(context).delete(Integer.parseInt(id));
+                            boolean deleteSuccessful = new ShotgunDAO(context).delete(Integer.parseInt(id));
 
                             if (deleteSuccessful){
                                 Toast.makeText(context, "Record was deleted.", Toast.LENGTH_SHORT).show();
@@ -49,8 +52,8 @@ public class OnLongClickListenerShotgunRecord implements View.OnLongClickListene
     }
 
     public void editRecord(final int shotgunId) {
-        final TableControllerShotgun tableControllerShotgun = new TableControllerShotgun(context);
-        ObjectShotgun shotgun = tableControllerShotgun.readSingleRecord(shotgunId);
+        final ShotgunDAO shotgunDAO = new ShotgunDAO(context);
+        Shotgun shotgun = shotgunDAO.readSingleRecord(shotgunId);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.shotgun_input_form, null, false);
@@ -59,9 +62,9 @@ public class OnLongClickListenerShotgunRecord implements View.OnLongClickListene
         final EditText editTextShotgunPrice =  formElementsView.findViewById(R.id.editTextShotgunPrice);
         final EditText editTextShotgunImageUrl =  formElementsView.findViewById(R.id.editTextShotgunImageUrl);
 
-        editTextShotgunName.setText(shotgun.name);
-        editTextShotgunImageUrl.setText(shotgun.image_url);
-        editTextShotgunPrice.setText(Double.toString(shotgun.price));
+        editTextShotgunName.setText(shotgun.getName());
+        editTextShotgunImageUrl.setText(shotgun.getImageURL());
+        editTextShotgunPrice.setText(Double.toString(shotgun.getPrice()));
 
         new AlertDialog.Builder(context)
                 .setView(formElementsView)
@@ -72,9 +75,9 @@ public class OnLongClickListenerShotgunRecord implements View.OnLongClickListene
                                 String newName = editTextShotgunName.getText().toString();
                                 String newImageUrl = editTextShotgunImageUrl.getText().toString();
                                 Double newPrice = Double.parseDouble(editTextShotgunPrice.getText().toString());
-                                ObjectShotgun shotgun = new ObjectShotgun(shotgunId, newName, newImageUrl, newPrice);
+                                Shotgun shotgun = new Shotgun(shotgunId, newName, newImageUrl, newPrice);
 
-                                boolean updateSuccessful = tableControllerShotgun.update(shotgun);
+                                boolean updateSuccessful = shotgunDAO.update(shotgun);
                                 if (updateSuccessful) {
                                     Toast.makeText(context, "Record was updated.", Toast.LENGTH_SHORT).show();
                                 } else {
