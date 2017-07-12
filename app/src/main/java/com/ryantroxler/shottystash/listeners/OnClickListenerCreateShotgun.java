@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionMenu;
 import com.ryantroxler.shottystash.DAO.ShotgunDAO;
-import com.ryantroxler.shottystash.MainActivity;
+import com.ryantroxler.shottystash.activities.MainActivity;
 import com.ryantroxler.shottystash.R;
 import com.ryantroxler.shottystash.models.Shotgun;
 

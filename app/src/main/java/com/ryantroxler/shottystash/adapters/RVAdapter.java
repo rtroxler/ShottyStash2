@@ -1,4 +1,4 @@
-package com.ryantroxler.shottystash;
+package com.ryantroxler.shottystash.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ryantroxler.shottystash.R;
 import com.ryantroxler.shottystash.listeners.OnLongClickListenerShotgunRecord;
 import com.ryantroxler.shottystash.models.Shotgun;
 import com.squareup.picasso.Picasso;
@@ -25,7 +26,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
     private List<Shotgun> shotguns;
     private Double currentBalance;
 
-    RVAdapter(List<Shotgun> shotguns, Double balance) {
+    public RVAdapter(List<Shotgun> shotguns, Double balance) {
         this.shotguns = shotguns;
         this.currentBalance = balance;
     }
@@ -45,6 +46,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
         notifyDataSetChanged();
     }
 
+    public void update(List<Shotgun> shotguns, Double balance) {
+        this.shotguns = shotguns;
+        this.currentBalance = balance;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ShotgunViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_item, viewGroup, false);
@@ -59,11 +66,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
         Double progress = (currentBalance / price) * 100;
         viewHolder.shotgunProgress.setProgress(progress.intValue());
 
+        Context context = viewHolder.shotgunImage.getContext();
         if (!shotguns.get(i).getImageURL().isEmpty()) {
-            Context context = viewHolder.shotgunImage.getContext();
             Picasso picasso = Picasso.with(context);
             picasso.load(shotguns.get(i).getImageURL())
                     .into(viewHolder.shotgunImage);
+        } else {
+            Picasso.with(context)
+                   .load(R.drawable.shotgun_silhouette)
+                   .into(viewHolder.shotgunImage);
         }
         viewHolder.cv.setTag(Integer.toString(shotguns.get(i).getId()));
         viewHolder.cv.setOnLongClickListener(new OnLongClickListenerShotgunRecord());

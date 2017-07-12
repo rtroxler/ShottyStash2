@@ -18,7 +18,7 @@ import com.ryantroxler.shottystash.models.Transaction;
  * Created by ryantroxler on 7/9/17.
  */
 
-public class OnClickListenerDeposit implements View.OnClickListener {
+public class OnClickListenerWithdraw implements View.OnClickListener {
     Context context;
 
     @Override
@@ -27,20 +27,20 @@ public class OnClickListenerDeposit implements View.OnClickListener {
 
         FloatingActionMenu fam = (FloatingActionMenu) ((MainActivity) context).findViewById(R.id.fam);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View formElementsView = inflater.inflate(R.layout.transaction_form, null, false);
+        final View formElementsView = inflater.inflate(R.layout.withdraw_form, null, false);
 
         final EditText editTransactionAmount = formElementsView.findViewById(R.id.editTransactionAmount);
 
         fam.close(false);
         new AlertDialog.Builder(context)
                 .setView(formElementsView)
-                .setTitle("New Deposit")
+                .setTitle("New Withdrawal")
                 .setPositiveButton("Add",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Double price = Double.parseDouble(editTransactionAmount.getText().toString());
 
-                                Transaction transaction = new Transaction(price);
+                                Transaction transaction = new Transaction(- price);
 
                                 boolean createSuccessful = new TransactionDAO(context).create(transaction);
 

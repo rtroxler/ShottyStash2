@@ -1,4 +1,4 @@
-package com.ryantroxler.shottystash;
+package com.ryantroxler.shottystash.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +14,11 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
 import com.ryantroxler.shottystash.DAO.ShotgunDAO;
 import com.ryantroxler.shottystash.DAO.TransactionDAO;
+import com.ryantroxler.shottystash.R;
+import com.ryantroxler.shottystash.adapters.RVAdapter;
 import com.ryantroxler.shottystash.listeners.OnClickListenerCreateShotgun;
 import com.ryantroxler.shottystash.listeners.OnClickListenerDeposit;
+import com.ryantroxler.shottystash.listeners.OnClickListenerWithdraw;
 import com.ryantroxler.shottystash.models.Shotgun;
 
 import java.util.List;
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton2 = (FloatingActionButton) findViewById(R.id.fam_item_2);
         floatingActionButton2.setOnClickListener(new OnClickListenerDeposit());
         floatingActionButton3 = (FloatingActionButton) findViewById(R.id.fam_item_3);
-        floatingActionButton3.setOnClickListener(new OnClickListenerDeposit()); //validations on withdraw amount, gross
+        floatingActionButton3.setOnClickListener(new OnClickListenerWithdraw()); //validations on withdraw amount, gross
 
         updateBalance();
         readRecycledRecords();
@@ -71,13 +74,14 @@ public class MainActivity extends AppCompatActivity {
         RVAdapter adapter = (RVAdapter) recyclerView.getAdapter();
 
         List<Shotgun> shotguns = new ShotgunDAO(this).read();
-        adapter.update(shotguns);
+        Double balance = new TransactionDAO(this).currentBalance();
+        adapter.update(shotguns, balance);
     }
 
     public void updateBalance() {
-        TextView balanceView = (TextView) findViewById(R.id.currentBalance);
+        TextView balanceView = (TextView) findViewById(R.id.toolbar_title);
         Double balance = new TransactionDAO(this).currentBalance();
-        balanceView.setText("Current Stash: $" + balance.toString());
+        balanceView.setText("  --  $" + balance.toString());
     }
 
     public void updateDatabase() {
