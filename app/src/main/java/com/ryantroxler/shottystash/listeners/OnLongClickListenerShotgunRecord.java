@@ -3,6 +3,7 @@ package com.ryantroxler.shottystash.listeners;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +26,8 @@ public class OnLongClickListenerShotgunRecord implements View.OnLongClickListene
     public boolean onLongClick(View view) {
         context = view.getContext();
         id = view.getTag().toString();
+        Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(50);
 
         final CharSequence[] items = { "Edit", "Delete"};
 
@@ -61,9 +64,11 @@ public class OnLongClickListenerShotgunRecord implements View.OnLongClickListene
         final EditText editTextShotgunName =  formElementsView.findViewById(R.id.editTextShotgunName);
         final EditText editTextShotgunPrice =  formElementsView.findViewById(R.id.editTextShotgunPrice);
         final EditText editTextShotgunImageUrl =  formElementsView.findViewById(R.id.editTextShotgunImageUrl);
+        final EditText editTextShotgunWebUrl =  formElementsView.findViewById(R.id.editTextShotgunWebUrl);
 
         editTextShotgunName.setText(shotgun.getName());
         editTextShotgunImageUrl.setText(shotgun.getImageURL());
+        editTextShotgunWebUrl.setText(shotgun.getWebURL());
         editTextShotgunPrice.setText(Double.toString(shotgun.getPrice()));
 
         new AlertDialog.Builder(context)
@@ -74,8 +79,9 @@ public class OnLongClickListenerShotgunRecord implements View.OnLongClickListene
                             public void onClick(DialogInterface dialog, int id) {
                                 String newName = editTextShotgunName.getText().toString();
                                 String newImageUrl = editTextShotgunImageUrl.getText().toString();
+                                String newWebUrl = editTextShotgunWebUrl.getText().toString();
                                 Double newPrice = Double.parseDouble(editTextShotgunPrice.getText().toString());
-                                Shotgun shotgun = new Shotgun(shotgunId, newName, newImageUrl, newPrice);
+                                Shotgun shotgun = new Shotgun(shotgunId, newName, newImageUrl, newWebUrl, newPrice);
 
                                 boolean updateSuccessful = shotgunDAO.update(shotgun);
                                 if (updateSuccessful) {

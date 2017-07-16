@@ -8,18 +8,21 @@ public class Shotgun {
     int id;
     String name;
     String image_url;
+    String web_url;
     Double price;
 
     public Shotgun() {}
-    public Shotgun(String n, String url, Double p) {
+    public Shotgun(String n, String image_url, String web_url, Double p) {
         name = n;
-        image_url = url;
+        this.image_url = image_url;
+        this.web_url = web_url;
         price = p;
     }
-    public Shotgun(int i, String n, String url, Double p) {
+    public Shotgun(int i, String n, String image_url, String web_url, Double p) {
         id = i;
         name = n;
-        image_url = url;
+        this.image_url = image_url;
+        this.web_url = web_url;
         price = p;
     }
 
@@ -33,6 +36,10 @@ public class Shotgun {
 
     public String getImageURL() {
         return this.image_url;
+    }
+
+    public String getWebURL() {
+        return this.web_url;
     }
 
     public Double getPrice() {

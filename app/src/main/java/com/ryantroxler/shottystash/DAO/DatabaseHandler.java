@@ -47,5 +47,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         onCreate(db);
     }
+
+    public void schemaMigration(SQLiteDatabase db) {
+        String sql = "ALTER TABLE shotguns ADD web_url TEXT";
+        db.execSQL(sql);
+    }
 }
 

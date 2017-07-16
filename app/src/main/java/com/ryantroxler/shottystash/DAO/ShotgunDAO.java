@@ -20,16 +20,18 @@ public class ShotgunDAO extends DatabaseHandler {
     public Shotgun getShotgunFromCursor(Cursor cursor) {
         int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("id")));
         String name = cursor.getString(cursor.getColumnIndex("name"));
-        String url = cursor.getString(cursor.getColumnIndex("image_url"));
+        String image_url = cursor.getString(cursor.getColumnIndex("image_url"));
+        String web_url = cursor.getString(cursor.getColumnIndex("web_url"));
         Double price = Double.parseDouble(cursor.getString(cursor.getColumnIndex("price")));
 
-        return new Shotgun(id, name, url, price);
+        return new Shotgun(id, name, image_url, web_url, price);
     }
 
     public boolean create(Shotgun shotgun) {
         ContentValues values = new ContentValues();
         values.put("name", shotgun.getName());
         values.put("image_url", shotgun.getImageURL());
+        values.put("web_url", shotgun.getWebURL());
         values.put("price", shotgun.getPrice());
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -83,6 +85,7 @@ public class ShotgunDAO extends DatabaseHandler {
         ContentValues values = new ContentValues();
         values.put("name", shotgun.getName());
         values.put("image_url", shotgun.getImageURL());
+        values.put("web_url", shotgun.getWebURL());
         values.put("price", shotgun.getPrice());
 
         String where = "id = ?";

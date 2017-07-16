@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.ryantroxler.shottystash.R;
 import com.ryantroxler.shottystash.listeners.OnLongClickListenerShotgunRecord;
+import com.ryantroxler.shottystash.listeners.OnClickListenerShotgunRecord;
 import com.ryantroxler.shottystash.models.Shotgun;
 import com.squareup.picasso.Picasso;
 
@@ -78,6 +79,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShotgunViewHolder>
         }
         viewHolder.cv.setTag(Integer.toString(shotguns.get(i).getId()));
         viewHolder.cv.setOnLongClickListener(new OnLongClickListenerShotgunRecord());
+        viewHolder.cv.setOnClickListener(new OnClickListenerShotgunRecord());
     }
 
     @Override

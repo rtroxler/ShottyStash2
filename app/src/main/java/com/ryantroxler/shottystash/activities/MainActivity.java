@@ -1,5 +1,6 @@
 package com.ryantroxler.shottystash.activities;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
+import com.ryantroxler.shottystash.DAO.DatabaseHandler;
 import com.ryantroxler.shottystash.DAO.ShotgunDAO;
 import com.ryantroxler.shottystash.DAO.TransactionDAO;
 import com.ryantroxler.shottystash.R;
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateDatabase() {
 //        DatabaseHandler dbh = new DatabaseHandler(this);
 //        SQLiteDatabase db = dbh.getWritableDatabase();
+//        dbh.schemaMigration(db);
 //        dbh.onUpgrade(db, 0,1); NOPE
 //        dbh.createTransactions(db); // Whatevs
 //        db.close();

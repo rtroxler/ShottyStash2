@@ -32,6 +32,7 @@ public class OnClickListenerCreateShotgun implements View.OnClickListener {
         final EditText editTextShotgunName = formElementsView.findViewById(R.id.editTextShotgunName);
         final EditText editTextShotgunPrice = formElementsView.findViewById(R.id.editTextShotgunPrice);
         final EditText editTextShotgunImageUrl = formElementsView.findViewById(R.id.editTextShotgunImageUrl);
+        final EditText editTextShotgunWebUrl = formElementsView.findViewById(R.id.editTextShotgunWebUrl);
 
         fam.close(false);
         new AlertDialog.Builder(context)
@@ -43,8 +44,9 @@ public class OnClickListenerCreateShotgun implements View.OnClickListener {
                                 String name = editTextShotgunName.getText().toString();
                                 Double price = Double.parseDouble(editTextShotgunPrice.getText().toString());
                                 String image_url = editTextShotgunImageUrl.getText().toString();
+                                String web_url = editTextShotgunWebUrl.getText().toString();
 
-                                Shotgun shotgun = new Shotgun(name, image_url, price);
+                                Shotgun shotgun = new Shotgun(name, image_url, web_url, price);
 
                                 boolean createSuccessful = new ShotgunDAO(context).create(shotgun);
 
